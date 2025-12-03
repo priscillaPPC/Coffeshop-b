@@ -2,7 +2,7 @@ package cl.duoc.coffeeshop.coffeeshop_api.security.filter;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
-import cl.duoc.coffeeshop.coffeeshop_api.security.model.FirebaseAuthentication; // 👈 IMPORTACIÓN CORREGIDA
+import cl.duoc.coffeeshop.coffeeshop_api.security.model.FirebaseAuthentication;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,7 +14,8 @@ import java.io.IOException;
 
 public class FirebaseTokenFilter extends OncePerRequestFilter {
 
-    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    // 🔥 IMPORTANTE: La inicialización de FirebaseAuth debe ser eliminada de aquí
+    // y llamada dentro de doFilterInternal para evitar el error de inicialización (orden).
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -37,6 +38,11 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
         try {
             // 3. Extraer y validar el token
             String token = header.substring(7);
+
+            // CORRECCIÓN CLAVE: Obtener la instancia de FirebaseAuth aquí,
+            // asegurando que FirebaseConfig ya se haya ejecutado.
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
             FirebaseToken firebaseToken = firebaseAuth.verifyIdToken(token);
 
             // 4. Crear objeto de autenticación
