@@ -1,15 +1,15 @@
 package cl.duoc.coffeeshop.coffeeshop_api.controller;
 
-import cl.duoc.coffeeshop.coffeeshop_api.security.model.Product;
-import cl.duoc.coffeeshop.coffeeshop_api.service.ProductService;
-import io.swagger.v3.oas.annotations.Operation; // 👈 Importación
-import io.swagger.v3.oas.annotations.security.SecurityRequirement; // 👈 Importación
+import cl.duoc.coffeeshop.coffeeshop_api.model.Product; // 👈 CORREGIDO: Apunta al paquete 'model'
+import cl.duoc.coffeeshop.coffeeshop_api.service.ProductService; // 👈 Apunta al paquete 'service'
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-        import java.util.List;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/products") // Versión v1 añadida

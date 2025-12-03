@@ -1,6 +1,6 @@
 package cl.duoc.coffeeshop.coffeeshop_api.service;
 
-import cl.duoc.coffeeshop.coffeeshop_api.security.model.Product; // Importa la Entity correcta
+import cl.duoc.coffeeshop.coffeeshop_api.model.Product; // 👈 IMPORTACIÓN CORREGIDA
 import cl.duoc.coffeeshop.coffeeshop_api.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,7 @@ public class ProductService {
     private ProductRepository productRepository;
 
     public List<Product> findAllActive() {
+        // Usa el método del repositorio para obtener solo productos NO eliminados
         return productRepository.findByDeletedFalse();
     }
 
@@ -27,6 +28,7 @@ public class ProductService {
     }
 
     public void delete(Long id) {
+        // Implementación de borrado LÓGICO (setea deleted = true)
         Optional<Product> optionalProduct = productRepository.findById(id);
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
