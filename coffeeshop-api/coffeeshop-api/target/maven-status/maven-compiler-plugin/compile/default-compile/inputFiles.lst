@@ -1,0 +1,10 @@
+C:\Users\prisc\Downloads\coffeeshop-api\coffeeshop-api\src\main\java\cl\duoc\coffeeshop\coffeeshop_api\CoffeeshopApiApplication.java
+C:\Users\prisc\Downloads\coffeeshop-api\coffeeshop-api\src\main\java\cl\duoc\coffeeshop\coffeeshop_api\controller\ProductController.java
+C:\Users\prisc\Downloads\coffeeshop-api\coffeeshop-api\src\main\java\cl\duoc\coffeeshop\coffeeshop_api\repository\ProductRepository.java
+C:\Users\prisc\Downloads\coffeeshop-api\coffeeshop-api\src\main\java\cl\duoc\coffeeshop\coffeeshop_api\security\model\FirebaseAuthentication.java
+C:\Users\prisc\Downloads\coffeeshop-api\coffeeshop-api\src\main\java\cl\duoc\coffeeshop\coffeeshop_api\security\model\Product.java
+C:\Users\prisc\Downloads\coffeeshop-api\coffeeshop-api\src\main\java\cl\duoc\coffeeshop\coffeeshop_api\security\config\SecurityConfig.java
+C:\Users\prisc\Downloads\coffeeshop-api\coffeeshop-api\src\main\java\cl\duoc\coffeeshop\coffeeshop_api\config\FirebaseConfig.java
+C:\Users\prisc\Downloads\coffeeshop-api\coffeeshop-api\src\main\java\cl\duoc\coffeeshop\coffeeshop_api\security\config\OpenApiConfig.java
+C:\Users\prisc\Downloads\coffeeshop-api\coffeeshop-api\src\main\java\cl\duoc\coffeeshop\coffeeshop_api\service\ProductService.java
+C:\Users\prisc\Downloads\coffeeshop-api\coffeeshop-api\src\main\java\cl\duoc\coffeeshop\coffeeshop_api\security\filter\FirebaseTokenFilter.java
