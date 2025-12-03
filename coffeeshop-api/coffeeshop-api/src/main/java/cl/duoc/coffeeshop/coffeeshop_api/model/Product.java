@@ -1,4 +1,4 @@
-package cl.duoc.coffeeshop.coffeeshop_api.security.model;
+package cl.duoc.coffeeshop.coffeeshop_api.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

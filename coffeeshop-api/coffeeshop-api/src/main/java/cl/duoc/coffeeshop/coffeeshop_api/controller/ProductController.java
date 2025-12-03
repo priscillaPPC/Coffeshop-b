@@ -1,6 +1,6 @@
 package cl.duoc.coffeeshop.coffeeshop_api.controller;
 
-import cl.duoc.coffeeshop.coffeeshop_api.model.Product; // 👈 CORREGIDO: Apunta al paquete 'model'
+import cl.duoc.coffeeshop.coffeeshop_api.model.Product;
 import cl.duoc.coffeeshop.coffeeshop_api.service.ProductService; // 👈 Apunta al paquete 'service'
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
