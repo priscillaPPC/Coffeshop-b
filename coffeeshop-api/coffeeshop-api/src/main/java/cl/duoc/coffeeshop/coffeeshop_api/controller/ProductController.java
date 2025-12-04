@@ -1,7 +1,7 @@
 package cl.duoc.coffeeshop.coffeeshop_api.controller;
 
 import cl.duoc.coffeeshop.coffeeshop_api.model.Product;
-import cl.duoc.coffeeshop.coffeeshop_api.service.ProductService; // 👈 Apunta al paquete 'service'
+import cl.duoc.coffeeshop.coffeeshop_api.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/products") // Versión v1 añadida
+@RequestMapping("/api/v1/products")
+// 🔥 CORRECCIÓN CRÍTICA: Permite peticiones desde el puerto 3000 (React)
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
 
     @Autowired
@@ -33,7 +35,7 @@ public class ProductController {
     @Operation(
             summary = "Crear un nuevo producto",
             description = "Requiere el rol ADMIN. Crea un producto en el catálogo.",
-            security = { @SecurityRequirement(name = "BearerAuth") } // Candado de seguridad
+            security = { @SecurityRequirement(name = "BearerAuth") }
     )
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
@@ -44,7 +46,7 @@ public class ProductController {
     @Operation(
             summary = "Actualizar producto por ID",
             description = "Requiere el rol ADMIN. Actualiza los detalles de un producto existente.",
-            security = { @SecurityRequirement(name = "BearerAuth") } // Candado de seguridad
+            security = { @SecurityRequirement(name = "BearerAuth") }
     )
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
@@ -62,7 +64,7 @@ public class ProductController {
     @Operation(
             summary = "Borrado Lógico de producto por ID",
             description = "Requiere el rol ADMIN. Marca el producto como eliminado (deleted=true).",
-            security = { @SecurityRequirement(name = "BearerAuth") } // Candado de seguridad
+            security = { @SecurityRequirement(name = "BearerAuth") }
     )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
