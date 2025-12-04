@@ -14,23 +14,49 @@ import java.io.IOException;
 
 public class FirebaseTokenFilter extends OncePerRequestFilter {
 
-    // 🔥 IMPORTANTE: La inicialización de FirebaseAuth debe ser eliminada de aquí
-    // y llamada dentro de doFilterInternal para evitar el error de inicialización (orden).
+    // Lista de rutas que deben IGNORAR la aplicación del filtro (no requiere token)
+    private static final String[] EXCLUDED_PATHS = {
+            "/api/v1/products", // GET de productos
+            "/swagger-ui",
+            "/v3/api-docs"
+    };
+
+    // Método estándar de Spring para excluir rutas del filtro (NO aplica validación de token a estas rutas)
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        String method = request.getMethod();
+
+        // 1. Excluir todas las peticiones OPTIONS (CORS Preflight)
+        if (method.equals("OPTIONS")) {
+            return true;
+        }
+
+        // 2. Excluir las rutas GET de productos y Swagger (tal como en SecurityConfig)
+        if (method.equals("GET")) {
+            for (String excludedPath : EXCLUDED_PATHS) {
+                // Comprueba si la ruta es la exacta O si empieza con la ruta (para /swagger-ui/index.html, etc.)
+                if (path.equals(excludedPath) || path.startsWith(excludedPath + "/")) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        String header = request.getHeader("Authorization");
+        // Si shouldNotFilter devolvió true, este método ni siquiera se llama.
+        // Solo llegamos aquí si se requiere autenticación (ej: POST, PUT, DELETE).
 
-        // Rutas públicas de Swagger
-        if (request.getRequestURI().startsWith("/swagger-ui") || request.getRequestURI().startsWith("/v3/api-docs")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+        String header = request.getHeader("Authorization");
 
         // 2. Verificar el encabezado Authorization
         if (header == null || !header.startsWith("Bearer ")) {
+            // Si es una ruta protegida y no hay token, Spring Security bloqueará con 403
             filterChain.doFilter(request, response);
             return;
         }
@@ -39,8 +65,6 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
             // 3. Extraer y validar el token
             String token = header.substring(7);
 
-            // CORRECCIÓN CLAVE: Obtener la instancia de FirebaseAuth aquí,
-            // asegurando que FirebaseConfig ya se haya ejecutado.
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
             FirebaseToken firebaseToken = firebaseAuth.verifyIdToken(token);
